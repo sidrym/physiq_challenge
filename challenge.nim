@@ -1,4 +1,4 @@
-import httpclient, json, strutils
+import httpclient, json
 
 let
   url = "https://data.cityofchicago.org/resource/x8fc-8rcq.json"
@@ -34,25 +34,26 @@ while true:
 
   code = readline(stdin)
 
-  var
-    i = 0
-    l = 0
-
   if code == "history":
     if history.len == 0:
       echo ("No history yet.")
       continue
 
+    var j = 0
     for i in countdown(history.len-1, 0):
-      l += 1
-      print_library(l, history[i])
+      j += 1
+      print_library(j, history[i])
 
   elif code == "exit":
     quit(QuitSuccess)
 
   else:
+    var j = 0
     for i in 0..libraries.len - 1:
       if libraries[i]["zip"].getStr == code:
-        l += 1
+        j += 1
         history.add(i)
-        print_library(l, i)
+        print_library(j, i)
+
+    if j == 0:
+      echo "Not Found"
